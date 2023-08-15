@@ -111,6 +111,41 @@ enum CommandMapUtil {
     }
 
     /**
+     * Registers a CommandExecutor with the server
+     *
+     * @param plugin the plugin instance
+     * @param command the command instance
+     * @param permission the command permission
+     * @param aliases the command aliases
+     */
+    public static void registerCommand(Plugin plugin, String permission, CommandExecutor command, String... aliases) {
+        Preconditions.checkArgument(aliases.length != 0, "No aliases");
+        CommandMap commandMap = getCommandMap();
+        Map<String, Command> knownCommandMap = getKnownCommandMap(commandMap);
+
+        for (String alias : aliases) {
+            try {
+                PluginCommand cmd = COMMAND_CONSTRUCTOR.newInstance(alias, plugin);
+                cmd.setPermission(permission);
+
+                commandMap.register(plugin.getDescription().getName(), cmd);
+                knownCommandMap.put(plugin.getDescription().getName().toLowerCase() + ":" + alias.toLowerCase(), cmd);
+                knownCommandMap.put(alias.toLowerCase(), cmd);
+
+                cmd.setLabel(alias.toLowerCase());
+
+                cmd.setExecutor(command);
+
+                if (command instanceof TabCompleter) {
+                    cmd.setTabCompleter((TabCompleter) command);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
      * Unregisters a CommandExecutor with the server
      *
      * @param command the command instance

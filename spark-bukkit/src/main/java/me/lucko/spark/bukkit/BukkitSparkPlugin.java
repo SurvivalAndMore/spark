@@ -85,7 +85,7 @@ public class BukkitSparkPlugin extends JavaPlugin implements SparkPlugin {
                 this.platform.executeCommand(s, new String[]{"tps"});
                 return true;
             };
-            CommandMapUtil.registerCommand(this, this.tpsCommand, "tps");
+            CommandMapUtil.registerCommand(this, "spark.tps", this.tpsCommand, "tps");
         }
 
         if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {

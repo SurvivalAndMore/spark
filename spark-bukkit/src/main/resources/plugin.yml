@@ -12,6 +12,73 @@ api-version: 1.13
 
 softdepend: [PlaceholderAPI, MVdWPlaceholderAPI]
 
+permissions:
+  spark:
+    default: false
+    children:
+      spark.healthreport: true
+      spark.ping: true
+      spark.tps: true
+      spark.tickmonitor: true
+      spark.gc: true
+      spark.gcmonitor: true
+      spark.heapsummary: true
+      spark.heapdump: true
+      spark.activity: true
+      spark.profiler: true
+      spark.commmand: true
+
+  spark.healthreport:
+    default: false
+    children:
+      spark.command: true
+
+  spark.ping:
+    default: false
+    children:
+      spark.command: true
+
+  spark.tps:
+    default: false
+    children:
+      spark.command: true
+
+  spark.tickmonitor:
+    default: false
+    children:
+      spark.command: true
+
+  spark.gc:
+    default: false
+    children:
+      spark.command: true
+
+  spark.gcmonitor:
+    default: false
+    children:
+      spark.command: true
+
+  spark.heapsummary:
+    default: false
+    children:
+      spark.command: true
+
+  spark.heapdump:
+    default: false
+    children:
+      spark.command: true
+
+  spark.activity:
+    default: false
+    children:
+      spark.command: true
+
+  spark.profiler:
+    default: false
+    children:
+      spark.command: true
+
 commands:
   spark:
     description: Main plugin command
+    permission: spark.command
